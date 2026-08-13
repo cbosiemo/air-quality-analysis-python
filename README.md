@@ -1,6 +1,6 @@
 # Historical Air Quality Analysis in Python
 
-A reproducible exploratory and predictive analysis of the **UCI Air Quality** dataset, using hourly pollution and meteorological measurements from an Italian city. The project examines temporal patterns, pollutant relationships, data-quality challenges, and the predictive signal available for benzene concentrations.
+A reproducible exploratory and predictive analysis of hourly air-quality and meteorological measurements from the UCI Air Quality dataset. The project examines temporal pollution patterns, pollutant-weather relationships, missing sensor data, and the predictive signal of environmental variables for benzene concentrations.
 
 ## Why this project
 
@@ -42,6 +42,22 @@ The workflow:
 
 The treatment of NMHC is a deliberate data-quality decision rather than an attempt to impute a largely unavailable variable.
 
+### Missing-data treatment
+
+Short temporal gaps were interpolated while longer gaps remained missing. The impact of interpolation was explicitly assessed:
+
+| Variable | Missing before | Missing after | Values filled |
+|---|---:|---:|---:|
+| CO | 1,683 | 1,181 | 502 |
+| Benzene | 366 | 240 | 126 |
+| NOx | 1,639 | 1,062 | 577 |
+| NO₂ | 1,642 | 1,064 | 578 |
+| Temperature | 366 | 240 | 126 |
+| Relative humidity | 366 | 240 | 126 |
+| Absolute humidity | 366 | 240 | 126 |
+
+This approach avoids treating interpolation as a substitute for genuinely unavailable observations and makes the effect of preprocessing transparent.
+
 ## Analysis
 
 The project includes:
@@ -59,11 +75,12 @@ The predictive component is **not a future forecasting model**. It estimates ben
 
 ## Selected findings
 
-- CO, benzene, NOx, and NO₂ show strong positive correlations, a pattern consistent with shared combustion-related sources such as road traffic.
-- Average pollutant profiles show pronounced morning and evening peaks, consistent with commuting-hour activity.
-- NOx levels are lower at weekends than on weekdays, again consistent with changing traffic activity. This is an observational association and is not treated as a causal policy estimate.
-- NOx and NO₂ increase during colder months in this dataset, while CO and benzene show a late-summer dip.
-- Linear Regression and Random Forest models both capture substantial predictive signal for benzene on the held-out period; the Random Forest achieves lower mean absolute error in the project results.
+- CO, benzene, NOx, and NO₂ form a strong positive correlation cluster, with several pairwise correlations of approximately **r = 0.6–0.9**. This pattern is consistent with shared combustion-related sources, including road traffic.
+- Average diurnal pollutant profiles show pronounced morning and evening peaks, consistent with changes in commuting-hour activity.
+- Mean NOx concentrations are approximately **27% lower on weekends than on weekdays** in this dataset. This is an observational association and is not interpreted as a causal traffic or policy effect.
+- NOx and NO₂ concentrations increase markedly from October onward, coinciding with cooler conditions. Seasonal changes in emissions and atmospheric dispersion may contribute to this pattern.
+- CO and benzene concentrations decline during late summer.
+- Linear Regression and Random Forest models capture substantial predictive signal for benzene. Using a chronological 80/20 train-test split, the Random Forest achieves approximately **R² = 0.77** on the held-out period.
 
 ## Limitations
 
@@ -76,20 +93,28 @@ air-quality-analysis-python/
 ├── README.md
 ├── requirements.txt
 ├── data/
-│   ├── raw/                    # download AirQualityUCI.csv here
-│   └── processed/              # cleaned, daily, and monthly datasets
+│   ├── raw/
+│   │   ├── README.md
+│   │   └── AirQualityUCI.csv
+│   └── processed/
+│       ├── README.md
+│       ├── airquality_clean.csv
+│       ├── airquality_daily.csv
+│       └── airquality_monthly.csv
 ├── notebooks/
+│   ├── README.md
 │   └── AirQuality_Analysis.ipynb
 ├── src/
+│   ├── README.md
 │   └── analysis.py
 ├── outputs/
-│   ├── figures/
+│   ├── README.md
 │   ├── correlation.csv
 │   ├── model_results.csv
 │   └── summary_stats.csv
 └── reports/
-    ├── Air_Quality_Report.docx
-    └── Air_Quality_Presentation.pptx
+    ├── README.md
+    └── Air_Quality_Report.pdf
 ```
 
 ## How to reproduce the analysis
@@ -97,7 +122,7 @@ air-quality-analysis-python/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/air-quality-analysis-python.git
+git clone https://github.com/cbosiemo/air-quality-analysis-python.git
 cd air-quality-analysis-python
 ```
 
@@ -125,15 +150,11 @@ On Windows:
 pip install -r requirements.txt
 ```
 
-### 4. Download the raw dataset
+### 4. Run the analysis
 
-Download `AirQualityUCI.csv` from UCI and save it as:
+The original dataset is included in `data/raw/` for reproducibility.
 
-```text
-data/raw/AirQualityUCI.csv
-```
-
-### 5. Run the analysis
+Run the standalone analysis:
 
 ```bash
 python src/analysis.py
@@ -152,7 +173,7 @@ Python · pandas · NumPy · Matplotlib · Seaborn · scikit-learn · Jupyter No
 ## Author
 
 **Cynthia Osiemo**  
-Economics, Statistics & Data Science  
+**MSc Data Science Student | Research Analyst | Economics** 
 GitHub: https://github.com/cbosiemo
 
 ## Acknowledgement
