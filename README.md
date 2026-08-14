@@ -118,6 +118,7 @@ This is an exploratory analysis of a single monitoring site covering about 13 mo
 
 ```text
 air-quality-analysis-python/
+├── .gitignore
 ├── README.md
 ├── requirements.txt
 ├── data/
