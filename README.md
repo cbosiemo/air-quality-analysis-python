@@ -101,6 +101,13 @@ The Random Forest model captures substantial variation in benzene concentrations
 
 Additional visualisations, including weekday–weekend comparisons and Random Forest feature importance, are available in [`outputs/figures/`](outputs/figures/).
 
+## Project deliverables
+
+- [Full analytical report](reports/Air_Quality_Report.pdf)
+- [Stakeholder presentation](reports/Air_Quality_Presentation.pdf)
+
+The report provides the complete methodology, findings, limitations, and interpretation, while the presentation summarises the analysis for a stakeholder audience.
+
 ## Selected findings
 
 - CO, benzene, NOx, and NO₂ form a strong positive correlation cluster, with several pairwise correlations of approximately **r = 0.6–0.9**. This pattern is consistent with shared combustion-related sources, including road traffic.
@@ -153,7 +160,8 @@ air-quality-analysis-python/
 │   └── summary_stats.csv
 └── reports/
     ├── README.md
-    └── Air_Quality_Report.pdf
+    ├── Air_Quality_Report.pdf
+    └── Air_Quality_Presentation.pdf
 ```
 
 ## How to reproduce the analysis
@@ -168,7 +176,7 @@ cd air-quality-analysis-python
 ### 2. Create and activate a virtual environment
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 ```
 
 On macOS/Linux:
@@ -180,13 +188,13 @@ source .venv/bin/activate
 On Windows:
 
 ```bash
-.venv\Scripts\activate
+.venv\Scripts\activate.bat
 ```
 
 ### 3. Install dependencies
 
 ```bash
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 ### 4. Run the analysis
@@ -196,14 +204,10 @@ The original dataset is included in `data/raw/` for reproducibility.
 Run the standalone analysis:
 
 ```bash
-python src/analysis.py
+python3 src/analysis.py
 ```
 
-Or open the Jupyter notebook:
-
-```bash
-jupyter notebook notebooks/AirQuality_Analysis.ipynb
-```
+**Alternatively, open `notebooks/AirQuality_Analysis.ipynb` in Jupyter Notebook or Google Colab and run the notebook from top to bottom.**
 
 ## Tools
 
@@ -212,7 +216,8 @@ Python · pandas · NumPy · Matplotlib · Seaborn · scikit-learn · Jupyter No
 ## Author
 
 **Cynthia Osiemo**  
-**MSc Data Science Student | Research Analyst | Economics** 
+**MSc Data Science Student | Research Analyst | Economics**
+
 GitHub: https://github.com/cbosiemo
 
 ## Acknowledgement
