@@ -69,7 +69,7 @@ missing_before.to_csv(OUTPUTS / "missingness_before_cleaning.csv", header=["miss
 # NMHC is >90% missing in this dataset, so it is excluded from analysis.
 df = df.drop(columns=["NMHC_ugm3"])
 
-# Interpolate only short time gaps. Longer gaps remain missing.
+# Apply time-based interpolation with a six-observation limit in each direction.
 df_clean = df.interpolate(method="time", limit=6, limit_direction="both")
 
 pollutants = ["CO_mgm3", "C6H6_ugm3", "NOx_ppb", "NO2_ugm3"]
@@ -103,7 +103,7 @@ for ax, col, color in zip(axes, pollutants, sns.color_palette("rocket", 4)):
     ax.set_ylabel(pretty[col]); ax.legend(fontsize=8)
 axes[0].set_title("Daily pollutant trends, March 2004 – April 2005", fontweight="bold")
 axes[-1].set_xlabel("Date")
-plt.tight_layout(); plt.savefig(FIGURES / "01_daily_timeseries.png"); plt.close()
+plt.tight_layout(); plt.savefig(FIGURES / "daily_pollutant_trends.png"); plt.close()
 
 monthly_norm = monthly[pollutants] / monthly[pollutants].max()
 fig, ax = plt.subplots(figsize=(11, 5))
@@ -113,12 +113,12 @@ ax.set_xticklabels(monthly_norm.index, rotation=45, ha="right")
 ax.set_ylabel("Normalised monthly mean (0–1)")
 ax.set_title("Monthly pollutant levels (normalised within pollutant)", fontweight="bold")
 ax.legend([pretty[c] for c in pollutants], fontsize=8)
-plt.tight_layout(); plt.savefig(FIGURES / "02_monthly_bars.png"); plt.close()
+plt.tight_layout(); plt.savefig(FIGURES / "monthly_pollutant_levels.png"); plt.close()
 
 fig, ax = plt.subplots(figsize=(8, 6.5))
 sns.heatmap(corr, annot=True, fmt=".2f", cmap="RdBu_r", center=0, vmin=-1, vmax=1, square=True, ax=ax)
 ax.set_title("Pearson correlation: pollutants & weather", fontweight="bold")
-plt.tight_layout(); plt.savefig(FIGURES / "03_correlation_heatmap.png"); plt.close()
+plt.tight_layout(); plt.savefig(FIGURES / "correlation_matrix.png"); plt.close()
 
 hourly_profile = df_clean.groupby(df_clean.index.hour)[pollutants].mean()
 fig, ax = plt.subplots(figsize=(10, 5))
@@ -126,9 +126,9 @@ for col, color in zip(pollutants, sns.color_palette("rocket", 4)):
     series = hourly_profile[col] / hourly_profile[col].max()
     ax.plot(series.index, series.values, marker="o", lw=2, color=color, label=pretty[col])
 ax.set(xticks=range(0, 24, 2), xlabel="Hour of day", ylabel="Normalised concentration")
-ax.set_title("Diurnal cycle — pollutants peak around commuting hours", fontweight="bold")
+ax.set_title("Diurnal cycle — hourly pollutant patterns", fontweight="bold")
 ax.legend(fontsize=9)
-plt.tight_layout(); plt.savefig(FIGURES / "04_diurnal_profile.png"); plt.close()
+plt.tight_layout(); plt.savefig(FIGURES / "diurnal_cycle.png"); plt.close()
 
 sample = df_clean.sample(min(2000, len(df_clean)), random_state=0)
 fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))
@@ -138,7 +138,7 @@ axes[0].set(xlabel="Temperature (°C)", ylabel="CO (mg/m³)", title="CO vs Tempe
 sns.scatterplot(data=sample, x="RH_pct", y="NO2_ugm3", ax=axes[1], alpha=0.4, s=15)
 sns.regplot(data=sample, x="RH_pct", y="NO2_ugm3", ax=axes[1], scatter=False, line_kws={"lw": 1.5})
 axes[1].set(xlabel="Relative Humidity (%)", ylabel="NO₂ (µg/m³)", title="NO₂ vs Relative Humidity")
-plt.tight_layout(); plt.savefig(FIGURES / "05_scatter_weather.png"); plt.close()
+plt.tight_layout(); plt.savefig(FIGURES / "pollutant_weather_scatter.png"); plt.close()
 
 tmp = df_clean.copy(); tmp["DayType"] = np.where(tmp.index.dayofweek < 5, "Weekday", "Weekend")
 fig, axes = plt.subplots(1, 4, figsize=(14, 4))
@@ -146,7 +146,7 @@ for ax, col in zip(axes, pollutants):
     sns.boxplot(data=tmp, x="DayType", y=col, ax=ax, showfliers=False)
     ax.set_title(pretty[col], fontsize=10); ax.set_xlabel("")
 plt.suptitle("Weekday vs weekend pollutant distributions", fontweight="bold", y=1.02)
-plt.tight_layout(); plt.savefig(FIGURES / "06_weekday_weekend.png"); plt.close()
+plt.tight_layout(); plt.savefig(FIGURES / "weekday_weekend.png"); plt.close()
 
 # 5. Predictive modelling: contemporaneous benzene estimation, not future forecasting.
 model_df = df_clean.dropna(subset=analysis_cols).copy()
@@ -180,14 +180,14 @@ ax.plot(model_df.index[split:], y_test.values, lw=1, alpha=0.8, label="Actual")
 ax.plot(model_df.index[split:], pred, lw=1, alpha=0.8, label="Predicted")
 ax.set_title(f"Benzene — actual vs predicted (Random Forest, R²={r2_score(y_test, pred):.3f})", fontweight="bold")
 ax.set_ylabel("C₆H₆ (µg/m³)"); ax.legend()
-plt.tight_layout(); plt.savefig(FIGURES / "07_predicted_vs_actual.png"); plt.close()
+plt.tight_layout(); plt.savefig(FIGURES / "benzene_actual_vs_predicted.png"); plt.close()
 
 importance = pd.Series(rf.feature_importances_, index=features).sort_values()
 fig, ax = plt.subplots(figsize=(8, 4.5))
 importance.plot(kind="barh", ax=ax)
 ax.set_title("Random Forest feature importance for benzene prediction", fontweight="bold")
 ax.set_xlabel("Relative importance")
-plt.tight_layout(); plt.savefig(FIGURES / "08_feature_importance.png"); plt.close()
+plt.tight_layout(); plt.savefig(FIGURES / "random_forest_feature_importance.png"); plt.close()
 
 print("Analysis complete.")
 print(f"Processed data: {PROCESSED}")
