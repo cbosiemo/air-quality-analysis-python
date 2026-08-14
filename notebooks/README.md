@@ -18,4 +18,8 @@ The notebook covers:
 
 The analysis uses the original `AirQualityUCI.csv` dataset located in `data/raw/`.
 
+## Running the notebook
+
+The notebook can be run locally with Jupyter Notebook or opened in Google Colab.
+
 Run the notebook from top to bottom to reproduce the main analysis.
