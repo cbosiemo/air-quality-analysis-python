@@ -38,13 +38,13 @@ The workflow:
 2. combines date and time into a proper datetime index;
 3. removes empty trailing columns and blank rows;
 4. drops NMHC from the analytical dataset because more than 90% of its observations are missing; and
-5. uses time-based interpolation only for short gaps of up to six hours, while leaving longer gaps missing.
+5. uses time-based interpolation with a six-observation limit in each direction, while retaining unresolved missing values where interpolation is not appropriate.
 
 The treatment of NMHC is a deliberate data-quality decision rather than an attempt to impute a largely unavailable variable.
 
 ### Missing-data treatment
 
-Short temporal gaps were interpolated while longer gaps remained missing. The impact of interpolation was explicitly assessed:
+Time-based interpolation was applied with a six-observation limit in each direction, while unresolved missing values were retained. The impact of interpolation was explicitly assessed:
 
 | Variable | Missing before | Missing after | Values filled |
 |---|---:|---:|---:|
