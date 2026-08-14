@@ -142,10 +142,13 @@ air-quality-analysis-python/
 │   │   ├── correlation_matrix.png
 │   │   ├── daily_pollutant_trends.png
 │   │   ├── diurnal_cycle.png
+│   │   ├── monthly_pollutant_levels.png
+│   │   ├── pollutant_weather_scatter.png
 │   │   ├── random_forest_feature_importance.png
 │   │   └── weekday_weekend.png
 │   ├── README.md
 │   ├── correlation.csv
+│   ├── missingness_before_cleaning.csv
 │   ├── model_results.csv
 │   └── summary_stats.csv
 └── reports/
