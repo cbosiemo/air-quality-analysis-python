@@ -83,7 +83,7 @@ Daily pollutant concentrations and seven-day rolling means show substantial temp
 
 ### Diurnal pollution patterns
 
-![Diurnal pollutant cycle](outputs/figures/diurnal_cycle.png)
+![Diurnal pollutant cycle](./outputs/figures/diurnal_cycle.png)
 
 Average hourly profiles reveal pronounced morning and evening pollution peaks, illustrating how pollutant concentrations vary systematically throughout the day.
 
