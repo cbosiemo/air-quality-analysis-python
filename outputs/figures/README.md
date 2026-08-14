@@ -2,18 +2,24 @@
 
 This folder contains visual outputs generated from the historical air-quality analysis using the UCI Air Quality dataset.
 
-The figures support the exploratory, temporal, correlation, and predictive modelling components of the project.
+The figures support the exploratory, temporal, correlation, pollutant-weather, and predictive modelling components of the project.
 
 ## Figures
 
 ### `daily_pollutant_trends.png`
 Daily concentrations of CO, benzene, NOx, and NO₂ with seven-day rolling means, used to examine temporal and seasonal variation across the study period.
 
+### `monthly_pollutant_levels.png`
+Normalised monthly mean concentrations of CO, benzene, NOx, and NO₂, allowing seasonal patterns to be compared across pollutants with different measurement scales.
+
 ### `diurnal_cycle.png`
 Average normalised pollutant concentrations by hour of day, highlighting systematic variation in pollution levels across the daily cycle.
 
 ### `correlation_matrix.png`
 Pearson correlation matrix showing relationships among the major pollutants and meteorological variables used in the analysis.
+
+### `pollutant_weather_scatter.png`
+Scatter plots examining the relationships between selected pollutant concentrations and meteorological variables, including temperature and relative humidity.
 
 ### `weekday_weekend.png`
 Comparison of pollutant distributions between weekdays and weekends, used to explore differences associated with weekly activity patterns.
@@ -33,4 +39,4 @@ These figures are generated from the analysis contained in:
 
 The underlying raw dataset is stored in `../../data/raw/`, while processed datasets and statistical outputs are maintained elsewhere in the repository.
 
-For the full methodology, findings, limitations, and interpretation, see the main project `README.md`.
+For the full methodology, findings, limitations, and interpretation, see the main project `README.md`. The final analytical report and stakeholder presentation are available in `../../reports/`.
