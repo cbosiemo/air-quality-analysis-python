@@ -73,6 +73,34 @@ The project includes:
 
 The predictive component is **not a future forecasting model**. It estimates benzene using co-located pollutant, meteorological, and temporal features. A chronological 80/20 split is used so that later observations are held out for evaluation.
 
+## Visual Results
+
+### Pollutant trends over time
+
+![Daily pollutant trends with seven-day rolling means](outputs/figures/daily_pollutant_trends.png)
+
+Daily pollutant concentrations and seven-day rolling means show substantial temporal variation across the March 2004 to April 2005 observation period.
+
+### Diurnal pollution patterns
+
+![Diurnal pollutant cycle](outputs/figures/diurnal_cycle.png)
+
+Average hourly profiles reveal pronounced morning and evening pollution peaks, illustrating how pollutant concentrations vary systematically throughout the day.
+
+### Pollutant and weather relationships
+
+![Correlation matrix of pollutants and meteorological variables](outputs/figures/correlation_matrix.png)
+
+The correlation structure highlights strong relationships among several combustion-related pollutants, alongside associations between pollutant concentrations and meteorological conditions.
+
+### Benzene predictive modelling
+
+![Actual versus predicted benzene concentrations](outputs/figures/benzene_actual_vs_predicted.png)
+
+The Random Forest model captures substantial variation in benzene concentrations during the chronologically held-out test period, achieving approximately **R² = 0.77**.
+
+Additional visualisations, including weekday–weekend comparisons and Random Forest feature importance, are available in [`outputs/figures/`](outputs/figures/).
+
 ## Selected findings
 
 - CO, benzene, NOx, and NO₂ form a strong positive correlation cluster, with several pairwise correlations of approximately **r = 0.6–0.9**. This pattern is consistent with shared combustion-related sources, including road traffic.
@@ -108,6 +136,13 @@ air-quality-analysis-python/
 │   ├── README.md
 │   └── analysis.py
 ├── outputs/
+│   ├── figures/
+│   │   ├── benzene_actual_vs_predicted.png
+│   │   ├── correlation_matrix.png
+│   │   ├── daily_pollutant_trends.png
+│   │   ├── diurnal_cycle.png
+│   │   ├── random_forest_feature_importance.png
+│   │   └── weekday_weekend.png
 │   ├── README.md
 │   ├── correlation.csv
 │   ├── model_results.csv
