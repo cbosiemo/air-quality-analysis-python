@@ -17,7 +17,7 @@ The original dataset was cleaned and prepared using Python and pandas. Key prepr
 - Combining the original date and time fields into a datetime index.
 - Assessing missingness across variables.
 - Excluding NMHC due to more than 90% missing observations.
-- Handling short gaps in the remaining time-series variables.
+- Applying time-based interpolation with a six-observation limit in each direction, while retaining unresolved missing values.
 - Generating daily and monthly aggregates for temporal analysis.
 
 The complete and reproducible data-cleaning workflow is available in the project Jupyter notebook.
