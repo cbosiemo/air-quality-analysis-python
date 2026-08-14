@@ -14,3 +14,19 @@ The script complements the Jupyter notebook by providing a reproducible workflow
 - Running the predictive modelling workflow
 
 The script uses relative project paths so that it can be run from a cloned copy of this repository.
+
+## Running the script
+
+From the repository root, install the project dependencies:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+Then run:
+
+```bash
+python3 src/analysis.py
+```
+
+The script generates processed datasets in `data/processed/`, statistical and modelling outputs in `outputs/`, and reproducible visualisations in `outputs/figures/`.
